@@ -29,7 +29,8 @@ public final class PreviewFeederService {
         ClassPathResource resource = new ClassPathResource(Constant.FILE_TO_FEED);
 
 
-        URL url = new URL("http://infolab.stanford.edu/pub/papers/google.pdf");
+        /* URL url = new URL("http://infolab.stanford.edu/pub/papers/google.pdf");  */
+        URL url = new URL("https://www.vinci.com/vinci/transactions.nsf/(unid)/1653B12B00829395C125833500401652/$file/vinci_2018_43.pdf");
         InputStream in = url.openStream();
 
 
