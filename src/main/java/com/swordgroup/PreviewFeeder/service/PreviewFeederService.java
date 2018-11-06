@@ -28,7 +28,8 @@ public final class PreviewFeederService {
 
     public static void main(final String[] args) throws IOException {
         ClassPathResource resource = new ClassPathResource(Constant.FILE_TO_FEED);
-        String objectID = "https://www.vinci.com/commun/communiques.nsf/DCC7F89D1A4DE415C125692F002D5AE4/$file/opegtmus.pdf";
+        /* String objectID = "https://www.vinci.com/commun/communiques.nsf/DCC7F89D1A4DE415C125692F002D5AE4/$file/opegtmus.pdf";  */
+        String objectID ="https://www.vinci.com/vinci/transactions.nsf/(unid)/1653B12B00829395C125833500401652/$file/vinci_2018_43.pdf";
         URL url = new URL(objectID);
         String specificDirectoryName = objectID.replaceFirst("https://","").replaceAll("[^A-Za-z0-9]","-");
 
