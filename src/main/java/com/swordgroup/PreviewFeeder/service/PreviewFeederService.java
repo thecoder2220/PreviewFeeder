@@ -10,6 +10,7 @@ import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Service;
 
 import java.awt.image.BufferedImage;
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -27,12 +28,18 @@ public final class PreviewFeederService {
 
     public static void main(final String[] args) throws IOException {
         ClassPathResource resource = new ClassPathResource(Constant.FILE_TO_FEED);
+        String objectID = "https://www.vinci.com/commun/communiques.nsf/DCC7F89D1A4DE415C125692F002D5AE4/$file/opegtmus.pdf";
+        URL url = new URL(objectID);
+        String specificDirectoryName = objectID.replaceFirst("https://","").replaceAll("[^A-Za-z0-9]","-");
 
+        new File("output/img/" +specificDirectoryName).mkdirs();
 
-        /* URL url = new URL("http://infolab.stanford.edu/pub/papers/google.pdf");  */
-        URL url = new URL("https://www.vinci.com/vinci/transactions.nsf/(unid)/1653B12B00829395C125833500401652/$file/vinci_2018_43.pdf");
+        /* URL url = new URL("http://infolab.stanford.edu/pub/papers/google.pdf");
+        URL url = new URL("https://www.vinci.com/vinci/transactions.nsf/(unid)/1653B12B00829395C125833500401652/$file/vinci_2018_43.pdf");*/
+
+        String[] tokens = objectID.split("/");
+        String pdfFilename = tokens[tokens.length-1];
         InputStream in = url.openStream();
-
 
          /* try (FileInputStream stream = new FileInputStream(resource.getFile())) {
             extractURLService
@@ -42,14 +49,12 @@ public final class PreviewFeederService {
         PDDocument document = PDDocument.load(in);
         PDFRenderer pdfRenderer = new PDFRenderer(document);
         int numberOfPages = document.getNumberOfPages() < 5 ? document.getNumberOfPages() : 5;
-        String  pdfFilename ="test.pdf";
-
         for (int page = 0; page < numberOfPages; ++page) {
             BufferedImage bim = pdfRenderer.renderImageWithDPI(page, 300, ImageType.RGB);
 
             // suffix in pdfFilename will be used as the file format
-            ImageIOUtil.writeImage(bim, "output/png/" + pdfFilename + "-" + (page + 1) + ".png", 300);
-            System.out.println("output/png/" + pdfFilename + "-" + (page + 1) + ".png created");
+            ImageIOUtil.writeImage(bim, "output/img/" + specificDirectoryName + "/"+ pdfFilename + "-" + (page + 1) + ".png", 300);
+            System.out.println("output/img/" + specificDirectoryName + "/"+ pdfFilename + "-" + (page + 1) + ".png created");
         }
         in.close();
 
